@@ -10,8 +10,8 @@ typedef intptr_t val_t;
  * @brief The basic element of the linked list
  */
 typedef struct node {
-    val_t data; /**< Data of the node */
-    struct node *next;  /**< Pointer to the next node */
+  val_t data;        /**< Data of the node */
+  struct node *next; /**< Pointer to the next node */
 } node_t;
 
 /**
@@ -19,14 +19,17 @@ typedef struct node {
  * @brief Store the information of the linked list.
  */
 typedef struct {
-    node_t *head;   /**< The head of the linked list */
-    uint32_t size;  /**< The size of the linked list */
+  node_t *head;  /**< The head of the linked list */
+  node_t *tail;  /**< The tail of the linked list */
+  uint32_t size; /**< The size of the linked list */
 } llist_t;
 
 llist_t *list_new();
-int list_add(llist_t * const the_list, const val_t val);
-void list_print(const llist_t * const the_list);
-node_t *list_get(llist_t * const the_list, const uint32_t index);
+int list_add(llist_t *const the_list, const val_t val);
+void list_print(const llist_t *const the_list);
+node_t *list_get(llist_t *const the_list, const uint32_t index);
 void list_free_nodes(llist_t *the_list);
+void list_add_dummy_head(llist_t *list);
+void list_remove_dummy_head(llist_t *list);
 
 #endif

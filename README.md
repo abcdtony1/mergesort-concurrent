@@ -25,7 +25,7 @@ make
 ```
 Then input integer data line-by-line
 ```bash
-make check
+make check-words
 ```
 Simple test suite.
 

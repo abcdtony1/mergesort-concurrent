@@ -1,8 +1,8 @@
 #ifndef _xprintF_H_
 #define _xprintF_H_
 
-#define printf_format_idt(x) \
-    _Generic((x), \
+#define printf_format_idt(x)                                                   \
+  _Generic((x), \
              char: "%c", \
              signed char: "%hhd", \
              unsigned char: "%hhu", \
@@ -20,9 +20,9 @@
              char *: "%s", \
              void *: "%p")
 
-#define xprint(x) \
-    printf(printf_format_idt(x), (x))
-#define xprintln(x) \
-    xprint(x); printf("\n")
+#define xprint(x) printf(printf_format_idt(x), (x))
+#define xprintln(x)                                                            \
+  xprint(x);                                                                   \
+  printf("\n")
 
 #endif

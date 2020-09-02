@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=gnu11 -Wall -g -pthread
+CFLAGS = -std=gnu11 -Wall -g -pthread -O0
 OBJS = list.o threadpool.o merge_sort.o main.o
 
 .PHONY: all clean test
@@ -30,7 +30,7 @@ tools/util-average: tools/util-average.c
 
 # Default variables for auto testing
 THREADS ?= 4
-TEST_DATA_FILE   ?= /tmp/test_number.txt
+TEST_DATA_FILE   ?= /tmp/test_data.txt
 NUM_OF_DATA      ?= 1024
 SORTED_DATA_FILE ?= $(TEST_DATA_FILE).sorted
 SORTED_RESULT    ?= /tmp/sort_result.txt
@@ -43,6 +43,12 @@ check: sort
 	@sort -g $(TEST_DATA_FILE) > $(SORTED_DATA_FILE)
 # Time for user program to sort the testing data, and ignore first the 3 lines of output.
 # Because we only want the sorting result.
+	@./sort $(THREADS) $(TEST_DATA_FILE) | tail -n +4 > $(SORTED_RESULT)
+	@bash scripts/compare.sh $(SORTED_DATA_FILE) $(SORTED_RESULT)
+
+check-words: sort
+	@uniq test_data/words.txt | sort -R | tail -n $(NUM_OF_DATA) > $(TEST_DATA_FILE)
+	@sort -d $(TEST_DATA_FILE) > $(SORTED_DATA_FILE)
 	@./sort $(THREADS) $(TEST_DATA_FILE) | tail -n +4 > $(SORTED_RESULT)
 	@bash scripts/compare.sh $(SORTED_DATA_FILE) $(SORTED_RESULT)
 
